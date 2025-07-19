@@ -1,6 +1,6 @@
 pandas
 requests
-dotenv
+python-dotenv
 pyarrow
 jupyter
 python-dotenv66
