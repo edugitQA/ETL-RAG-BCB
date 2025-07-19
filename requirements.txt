@@ -3,7 +3,7 @@ requests
 python-dotenv
 pyarrow
 jupyter
-python-dotenv66
+python-dotenv
 langchain
 langchain_community
 langchain_openai
