@@ -1,9 +1,9 @@
-
 {
   "api_url": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1783/dados?formato=json",
   "raw_data_path": "data/raw",
   "processed_data_path": "data/processed",
   "embedding_model": "openai",
-  "vector_store": "chroma",
+  "vector_store": "chromadb",
   "parquet_file_prefix": "dados_bcb"
 }
+

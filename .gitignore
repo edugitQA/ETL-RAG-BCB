@@ -18,7 +18,7 @@ __pycache__/
 
 # Ignorar arquivos gerados por notebooks
 .ipynb_checkpoints/
-
+vectorstore/
 # Ignorar arquivos de sistema
 .DS_Store
 Thumbs.db

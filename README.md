@@ -1,7 +1,7 @@
 # Pipe-Rag: Engenharia de Dados para Base de Conhecimento RAG
 
 ## Descrição do Projeto
-Este projeto tem como objetivo realizar o tratamento de dados provenientes de diversas fontes, aplicando processos de engenharia de dados para preparar os dados e alimentar uma base de conhecimento **RAG (Retrieval-Augmented Generation)** utilizando a biblioteca **LangGraph**.
+Este projeto realiza o tratamento de dados provenientes de APIs externas, aplicando processos de engenharia de dados para preparar os dados e alimentar uma base de conhecimento **RAG (Retrieval-Augmented Generation)** utilizando **ChromaDB** e **LangChain**.
 
 O foco principal é garantir que os dados tratados sejam organizados e estruturados para serem utilizados em sistemas de geração de respostas baseados em IA, com suporte a consultas eficientes e contextualizadas.
 
@@ -15,10 +15,14 @@ Pipe-Rag/
 │   ├── raw/          # Dados brutos coletados
 │   └── processed/    # Dados tratados e prontos para uso
 ├── notebooks/        # Notebooks Jupyter para desenvolvimento e análise
-├── src/              # Código-fonte do projeto
-│   ├── utils_config.py  # Funções utilitárias para configuração e manipulação de dados
-│   └── other_scripts.py # Outros scripts auxiliares
-├── tests/            # Testes unitários para validação do código
+│   ├── 01_coleta_api.ipynb       # Coleta de dados via API
+│   ├── 02_preprocessamento.ipynb # Transformação e limpeza de dados
+│   ├── 03_vetorizacao.ipynb      # Vetorização de dados com ChromaDB
+│   └── 04_langchain_query.ipynb  # Manipulação de dados vetorizados com LangChain
+├── scripts/          # Código-fonte do projeto
+│   ├── utils.py              # Funções utilitárias
+│   └── utils_config.py       # Configuração e manipulação de dados
+├── vectorstore/      # Base vetorial persistida pelo ChromaDB
 ├── requirements.txt  # Dependências do projeto
 ├── .gitignore        # Arquivos ignorados no controle de versão
 └── README.md         # Documentação do projeto
@@ -30,7 +34,8 @@ Pipe-Rag/
 ### Linguagens e Frameworks
 - **Python**: Linguagem principal para manipulação de dados e desenvolvimento.
 - **Pandas**: Para manipulação e transformação de dados.
-- **LangGraph**: Para integração com a base de conhecimento RAG.
+- **LangChain**: Para integração com a base de conhecimento RAG.
+- **ChromaDB**: Para armazenamento e busca vetorial eficiente.
 
 ### Ferramentas e Bibliotecas
 - **Jupyter Notebook**: Para desenvolvimento e análise exploratória.
@@ -43,17 +48,19 @@ Pipe-Rag/
 ## Processos de Engenharia de Dados Aplicados
 1. **Extração de Dados**:
    - Coleta de dados de APIs externas (ex.: Banco Central do Brasil).
-   
+
 2. **Transformação de Dados**:
    - Filtragem e limpeza de dados.
    - Estruturação em formatos tabulares (ex.: CSV).
    - Criação de colunas contextuais para enriquecer os dados.
 
-3. **Carregamento de Dados**:
-   - Salvamento de dados tratados em arquivos `.csv` no diretório `data/processed`.
+3. **Vetorização de Dados**:
+   - Conversão de dados tratados em vetores utilizando **OpenAIEmbeddings**.
+   - Persistência dos vetores no **ChromaDB**.
 
-4. **Preparação para Base de Conhecimento**:
-   - Estruturação dos dados tratados para integração com **LangGraph** e alimentação da base RAG.
+4. **Manipulação e Consulta**:
+   - Configuração de retrievers para busca eficiente.
+   - Uso de **LangChain** para responder perguntas baseadas nos dados vetorizados.
 
 ---
 
@@ -80,20 +87,22 @@ Pipe-Rag/
 3. Execute os notebooks para tratamento de dados:
    - `notebooks/01_coleta_api.ipynb`: Coleta de dados.
    - `notebooks/02_preprocessamento.ipynb`: Transformação e salvamento de dados.
+   - `notebooks/03_vetorizacao.ipynb`: Vetorização de dados com ChromaDB.
+   - `notebooks/04_langchain_query.ipynb`: Manipulação e consulta com LangChain.
 
-4. Integre os dados tratados com a base RAG utilizando **LangGraph**.
+4. Utilize os scripts para integração com a base de conhecimento RAG.
 
 ---
 
 ## Próximos Passos
 - **Automatização do Pipeline**:
   - Criar scripts para execução automatizada do pipeline ETL.
-  
-- **Integração com LangGraph**:
-  - Implementar a alimentação da base de conhecimento RAG com os dados tratados.
 
 - **Validação e Testes**:
   - Adicionar testes unitários para garantir a qualidade dos dados e do código.
+
+- **Expansão da Base de Conhecimento**:
+  - Adicionar mais fontes de dados e enriquecer os vetores com contexto adicional.
 
 ---
 

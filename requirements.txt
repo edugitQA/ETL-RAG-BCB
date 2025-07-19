@@ -1,5 +1,12 @@
 pandas
 requests
+dotenv
 pyarrow
 jupyter
 python-dotenv
+langchain
+langchain_community
+langchain_openai
+chromadb
+openai
+tiktoken
