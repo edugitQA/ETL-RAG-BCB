@@ -94,6 +94,29 @@ Pipe-Rag/
 
 ---
 
+## Front-End com Streamlit
+Este projeto inclui um front-end desenvolvido com **Streamlit** para facilitar a interação com a base de conhecimento RAG. Com ele, você pode:
+
+- Fazer perguntas diretamente à base de conhecimento.
+- Visualizar os documentos mais relevantes retornados pelo sistema.
+- Explorar os dados vetorizados de forma intuitiva.
+
+### Como Executar o Front-End
+1. Certifique-se de que todas as dependências estão instaladas:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Execute o aplicativo Streamlit:
+   ```bash
+   streamlit run scripts/qa_system.py
+   ```
+
+3. Acesse o front-end no navegador pelo endereço:
+   [http://localhost:8501](http://localhost:8501)
+
+---
+
 ## Próximos Passos
 - **Automatização do Pipeline**:
   - Criar scripts para execução automatizada do pipeline ETL.
