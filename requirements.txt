@@ -3,7 +3,7 @@ requests
 dotenv
 pyarrow
 jupyter
-python-dotenv
+python-dotenv66
 langchain
 langchain_community
 langchain_openai
@@ -11,3 +11,7 @@ chromadb
 openai
 tiktoken
 streamlit
+psycopg2-binary  
+sqlalchemy       
+pgvector         
+

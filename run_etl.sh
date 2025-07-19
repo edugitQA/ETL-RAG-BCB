@@ -1,6 +1,3 @@
-#!/bin/bash
-
-# Garante que o script pare em qualquer erro
 set -e
 
 # Instala as dependências do sistema para envio de e-mail (só será executado se necessário)

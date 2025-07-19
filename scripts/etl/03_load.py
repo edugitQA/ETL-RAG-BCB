@@ -1,53 +1,58 @@
 import os
-import shutil
 import json
 from dotenv import load_dotenv
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores.pgvector import PGVector
+
+
+load_dotenv()
+
+CONNECTION_STRING = os.getenv("DATABASE_URL")
+
+COLLECTION_NAME = "dados_bcb_sgs_1783"
+# --------------------------------------------
 
 def run_vectorization():
     """
-    Lê os dados processados e os carrega em uma nova base de dados vetorial ChromaDB.
-    A base vetorial antiga é apagada para garantir que os dados estejam sempre atualizados.
+    Lê os dados processados e os carrega na base de dados PGVector.
+    A coleção antiga é apagada para garantir que os dados estejam sempre atualizados.
     """
-    print("--- Iniciando Etapa 3: Carga e Vetorização ---")
-    load_dotenv()
+    print("--- Iniciando Etapa 3: Carga e Vetorização para o PGVector ---")
     
-    # Carrega as configurações
+    if not CONNECTION_STRING:
+        raise ValueError("A variável de ambiente DATABASE_URL não foi encontrada.")
+
+
     with open('configs/settings.json', 'r') as f:
         settings = json.load(f)
-        
     processed_file_path = os.path.join(settings['processed_data_path'], 'dados_processados.csv')
-    vectorstore_path = os.path.abspath(settings['vectorstore_path'])
-    
-    if not os.path.exists(processed_file_path):
-        raise FileNotFoundError(f"Arquivo processado não encontrado em: {processed_file_path}")
 
-    print("🗑️ Apagando base de dados vetorial antiga (se existir)...")
-    if os.path.exists(vectorstore_path):
-        shutil.rmtree(vectorstore_path)
-    os.makedirs(vectorstore_path, exist_ok=True)
-    
     print(f"📚 Carregando documentos do arquivo: {processed_file_path}")
     loader = CSVLoader(file_path=processed_file_path, source_column="contexto", encoding='utf-8')
     documents = loader.load()
-
+    
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     docs_split = splitter.split_documents(documents)
 
-    print("🧠 Criando embeddings e vetorizando os documentos...")
+    # 2. Cria embeddings
+    print("🧠 Criando embeddings...")
     embedding = OpenAIEmbeddings()
+
+    # 3. Conecta ao PGVector e recria a coleção com os novos documentos
+    # O método from_documents já apaga a coleção antiga se ela existir com o mesmo nome.
+    print(f"🔄 Conectando ao PGVector e recriando a coleção '{COLLECTION_NAME}'...")
     
-    db = Chroma.from_documents(
-        documents=docs_split,
+    PGVector.from_documents(
         embedding=embedding,
-        persist_directory=vectorstore_path,
-        collection_name="documents_dados_bcb"
+        documents=docs_split,
+        collection_name=COLLECTION_NAME,
+        connection_string=CONNECTION_STRING,
+        pre_delete_collection=True,  # ESSENCIAL: Garante que a coleção antiga seja apagada
     )
-    
-    print("✅ Nova base de dados vetorial criada com sucesso!")
+
+    print(f"✅ Nova base de dados vetorial criada com sucesso na coleção '{COLLECTION_NAME}'!")
     print("--- Etapa 3 Concluída ---")
 
 if __name__ == "__main__":

@@ -7,3 +7,5 @@
   "vector_store": "chromadb",
   "parquet_file_prefix": "dados_bcb"
 }
+
+
