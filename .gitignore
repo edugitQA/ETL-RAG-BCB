@@ -1,0 +1,30 @@
+# Ignorar arquivos e diretórios desnecessários
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar arquivos de ambiente virtual
+.env/
+*.env
+.venv/
+
+# Ignorar arquivos temporários
+*.tmp
+*.log
+*.bak
+
+# Ignorar configurações específicas do VSCode
+.vscode/
+
+# Ignorar arquivos gerados por notebooks
+.ipynb_checkpoints/
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de dados gerados
+data/raw/*
+data/processed/*
+*.csv
+*.parquet
