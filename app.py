@@ -31,7 +31,7 @@ else:
     def load_system():
         return init_qa_system()
 
-    qa_chain, _ = load_system() # Não precisamos mais da vectorstore aqui
+    qa_chain= load_system() # Não precisamos mais da vectorstore aqui
 
     # Campo para a pergunta do usuário
     user_question = st.text_input(
