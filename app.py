@@ -19,7 +19,7 @@ except (ImportError, ValueError, FileNotFoundError) as e:
 st.set_page_config(page_title="Q&A - Dados do BCB", layout="wide")
 
 st.title("🤖 Sistema de Perguntas e Respostas com Dados do BCB")
-st.markdown("Faça uma pergunta sobre a série histórica de dados.")
+st.markdown("Faça uma pergunta sobre dados de taxa de juros da Selic.")
 
 # Verifica se o sistema de Q&A foi carregado corretamente
 if not QA_SYSTEM_LOADED:

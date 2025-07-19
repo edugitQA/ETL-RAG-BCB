@@ -1,30 +1,29 @@
 #!/bin/bash
 
-# Navega para o diretório onde o script está localizado
-# Isso garante que os caminhos relativos (como 'configs/settings.json') funcionem corretamente
+# Garante que o script pare em qualquer erro
+set -e
+
+# Instala as dependências do sistema para envio de e-mail (só será executado se necessário)
+echo "📦 Verificando e instalando dependências do sistema (mailutils)..."
+sudo apt-get update && sudo apt-get install -y mailutils
+
+# Navega para o diretório do script para que os caminhos funcionem
 cd "$(dirname "$0")"
 
 echo "============================================="
 echo "🚀 INICIANDO PIPELINE DE ETL - $(date)"
 echo "============================================="
 
-# Ativa o ambiente virtual do Python
-# (Ajuste o caminho para .venv se o seu tiver outro nome)
-source .venv/bin/activate
+# Ativa o ambiente virtual (Render faz isso automaticamente, mas é uma boa prática)
+# source .venv/bin/activate
 
-# Executa cada etapa do pipeline em sequência
-# O '&&' garante que a próxima etapa só rode se a anterior for bem-sucedida
-python3 scripts/etl/01_extract.py && \
-python3 scripts/etl/02_transform.py && \
+# Executa o pipeline. O 'set -e' fará o script parar se algum comando falhar.
+python3 scripts/etl/01_extract.py
+python3 scripts/etl/02_transform.py
 python3 scripts/etl/03_load.py
 
-# Verifica o status de saída do último comando
-if [ $? -eq 0 ]; then
-    echo "✅ SUCESSO: Pipeline ETL concluído com êxito."
-else
-    echo "❌ FALHA: Ocorreu um erro durante a execução do pipeline."
-fi
-
+# Se o script chegou até aqui, tudo correu bem.
+echo "✅ SUCESSO: Pipeline ETL concluído com êxito."
 echo "============================================="
 echo "🏁 PIPELINE FINALIZADO - $(date)"
 echo "============================================="
