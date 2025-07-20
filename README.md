@@ -5,6 +5,9 @@ Este projeto realiza o tratamento de dados provenientes de APIs externas, aplica
 
 O foco principal é garantir que os dados tratados sejam organizados e estruturados para serem utilizados em sistemas de geração de respostas baseados em IA, com suporte a consultas eficientes e contextualizadas.
 
+Visualize o diagrama da arquitetura do projeto:
+[Diagrama da Arquitetura](https://www.mermaidchart.com/app/projects/cac86c92-5549-4df1-bafa-77fc947608cb/diagrams/9b478a16-471c-497c-87eb-41887811f5c9/version/v0.1/edit)
+
 ---
 
 ## Estrutura do Projeto
@@ -25,7 +28,7 @@ Pipe-Rag/
 ├── vectorstore/      # Base vetorial persistida pelo ChromaDB
 ├── app.py            # Front-end Streamlit para interação com a base de conhecimento
 ├── .github/workflows # Configuração de pipelines no GitHub Actions
-│   └── pipeline.yml  # Pipeline automatizado para execução do projeto
+│   └── scheduled_etl.yml  # Pipeline automatizado para execução do projeto
 ├── requirements.txt  # Dependências do projeto
 ├── .gitignore        # Arquivos ignorados no controle de versão
 └── README.md         # Documentação do projeto
@@ -39,9 +42,8 @@ Pipe-Rag/
 - **Pandas**: Para manipulação e transformação de dados.
 - **LangChain**: Para integração com a base de conhecimento RAG.
 - **ChromaDB**: Para armazenamento e busca vetorial eficiente.
-- **postgress**: Para armazenamento e busca vetorial eficiente em produçao
+- **PostgreSQL**: Para armazenamento e busca vetorial eficiente em produção.
 - **Streamlit**: Para desenvolvimento do front-end interativo.
-
 
 ### Ferramentas e Bibliotecas
 - **Jupyter Notebook**: Para desenvolvimento e análise exploratória.
@@ -49,6 +51,28 @@ Pipe-Rag/
 - **Pathlib**: Para manipulação de caminhos de arquivos.
 - **JSON**: Para leitura e manipulação de configurações.
 - **GitHub Actions**: Para automação de pipelines de CI/CD.
+
+---
+
+## Base de Dados Vetorial
+Este projeto utiliza **ChromaDB** para armazenamento e busca vetorial. A configuração varia conforme o ambiente:
+
+- **Ambiente de Desenvolvimento**:
+  - Nos notebooks, o ChromaDB está configurado para usar **DuckDB** como backend, armazenando os dados localmente no diretório `vectorstore`.
+  - Ideal para testes e desenvolvimento local.
+
+- **Ambiente de Produção**:
+  - Em produção, o ChromaDB está configurado para usar **PostgreSQL** como backend, garantindo maior escalabilidade e confiabilidade.
+  - A configuração do PostgreSQL é gerenciada por variáveis de ambiente e está integrada ao pipeline automatizado.
+
+### Configuração do PostgreSQL
+Certifique-se de que o banco de dados PostgreSQL está configurado corretamente antes de executar o projeto em produção. As variáveis de ambiente necessárias incluem:
+
+- `POSTGRES_HOST`: Endereço do servidor PostgreSQL.
+- `POSTGRES_PORT`: Porta do servidor PostgreSQL.
+- `POSTGRES_USER`: Usuário do banco de dados.
+- `POSTGRES_PASSWORD`: Senha do banco de dados.
+- `POSTGRES_DB`: Nome do banco de dados.
 
 ---
 
@@ -112,29 +136,9 @@ Pipe-Rag/
 
 ---
 
-## Base de Dados Vetorial
-Este projeto utiliza **ChromaDB** para armazenamento e busca vetorial. A configuração varia conforme o ambiente:
-
-- **Ambiente de Desenvolvimento**:
-  - Nos notebooks, o ChromaDB está configurado para usar **DuckDB** como backend, armazenando os dados localmente no diretório `vectorstore`.
-  - Ideal para testes e desenvolvimento local.
-
-- **Ambiente de Produção**:
-  - Em produção, o ChromaDB está configurado para usar **PostgreSQL** como backend, garantindo maior escalabilidade e confiabilidade.
-  - A configuração do PostgreSQL é gerenciada por variáveis de ambiente e está integrada ao pipeline automatizado.
-
-### Configuração do PostgreSQL
-Certifique-se de que o banco de dados PostgreSQL está configurado corretamente antes de executar o projeto em produção. As variáveis de ambiente necessárias incluem:
-
-- `POSTGRES_HOST`: Endereço do servidor PostgreSQL.
-- `POSTGRES_PORT`: Porta do servidor PostgreSQL.
-- `POSTGRES_USER`: Usuário do banco de dados.
-- `POSTGRES_PASSWORD`: Senha do banco de dados.
-- `POSTGRES_DB`: Nome do banco de dados.
-
----
-
 ## Próximos Passos
+- **Automatização do Pipeline**:
+  - Expandir os pipelines no GitHub Actions para incluir deploy contínuo.
 
 - **Validação e Testes**:
   - Adicionar testes unitários para garantir a qualidade dos dados e do código.
