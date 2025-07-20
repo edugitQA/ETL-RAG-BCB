@@ -39,7 +39,9 @@ Pipe-Rag/
 - **Pandas**: Para manipulação e transformação de dados.
 - **LangChain**: Para integração com a base de conhecimento RAG.
 - **ChromaDB**: Para armazenamento e busca vetorial eficiente.
+- **postgress**: Para armazenamento e busca vetorial eficiente em produçao
 - **Streamlit**: Para desenvolvimento do front-end interativo.
+
 
 ### Ferramentas e Bibliotecas
 - **Jupyter Notebook**: Para desenvolvimento e análise exploratória.
@@ -133,8 +135,6 @@ Certifique-se de que o banco de dados PostgreSQL está configurado corretamente 
 ---
 
 ## Próximos Passos
-- **Automatização do Pipeline**:
-  - Expandir os pipelines no GitHub Actions para incluir deploy contínuo.
 
 - **Validação e Testes**:
   - Adicionar testes unitários para garantir a qualidade dos dados e do código.
