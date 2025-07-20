@@ -29,6 +29,7 @@ def run_vectorization():
         settings = json.load(f)
     processed_file_path = os.path.join(settings['processed_data_path'], 'dados_processados.csv')
 
+
     print(f"📚 Carregando documentos do arquivo: {processed_file_path}")
     loader = CSVLoader(file_path=processed_file_path, source_column="contexto", encoding='utf-8')
     documents = loader.load()
@@ -41,7 +42,6 @@ def run_vectorization():
     embedding = OpenAIEmbeddings()
 
     # 3. Conecta ao PGVector e recria a coleção com os novos documentos
-    # O método from_documents já apaga a coleção antiga se ela existir com o mesmo nome.
     print(f"🔄 Conectando ao PGVector e recriando a coleção '{COLLECTION_NAME}'...")
     
     PGVector.from_documents(
@@ -49,7 +49,7 @@ def run_vectorization():
         documents=docs_split,
         collection_name=COLLECTION_NAME,
         connection_string=CONNECTION_STRING,
-        pre_delete_collection=True,  # ESSENCIAL: Garante que a coleção antiga seja apagada
+        pre_delete_collection=True, 
     )
 
     print(f"✅ Nova base de dados vetorial criada com sucesso na coleção '{COLLECTION_NAME}'!")

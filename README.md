@@ -23,6 +23,9 @@ Pipe-Rag/
 │   ├── utils.py              # Funções utilitárias
 │   └── utils_config.py       # Configuração e manipulação de dados
 ├── vectorstore/      # Base vetorial persistida pelo ChromaDB
+├── app.py            # Front-end Streamlit para interação com a base de conhecimento
+├── .github/workflows # Configuração de pipelines no GitHub Actions
+│   └── pipeline.yml  # Pipeline automatizado para execução do projeto
 ├── requirements.txt  # Dependências do projeto
 ├── .gitignore        # Arquivos ignorados no controle de versão
 └── README.md         # Documentação do projeto
@@ -36,12 +39,14 @@ Pipe-Rag/
 - **Pandas**: Para manipulação e transformação de dados.
 - **LangChain**: Para integração com a base de conhecimento RAG.
 - **ChromaDB**: Para armazenamento e busca vetorial eficiente.
+- **Streamlit**: Para desenvolvimento do front-end interativo.
 
 ### Ferramentas e Bibliotecas
 - **Jupyter Notebook**: Para desenvolvimento e análise exploratória.
 - **Requests**: Para coleta de dados via API.
 - **Pathlib**: Para manipulação de caminhos de arquivos.
 - **JSON**: Para leitura e manipulação de configurações.
+- **GitHub Actions**: Para automação de pipelines de CI/CD.
 
 ---
 
@@ -61,6 +66,12 @@ Pipe-Rag/
 4. **Manipulação e Consulta**:
    - Configuração de retrievers para busca eficiente.
    - Uso de **LangChain** para responder perguntas baseadas nos dados vetorizados.
+
+5. **Front-End Interativo**:
+   - Desenvolvimento de uma interface com **Streamlit** para facilitar consultas e visualização de dados.
+
+6. **Automação com GitHub Actions**:
+   - Configuração de pipelines para execução automatizada do projeto, incluindo testes e deploy.
 
 ---
 
@@ -90,36 +101,40 @@ Pipe-Rag/
    - `notebooks/03_vetorizacao.ipynb`: Vetorização de dados com ChromaDB.
    - `notebooks/04_langchain_query.ipynb`: Manipulação e consulta com LangChain.
 
-4. Utilize os scripts para integração com a base de conhecimento RAG.
+4. Execute o front-end Streamlit:
+   ```bash
+   streamlit run app.py
+   ```
+
+5. Utilize os pipelines automatizados no GitHub Actions para validação e deploy.
 
 ---
 
-## Front-End com Streamlit
-Este projeto inclui um front-end desenvolvido com **Streamlit** para facilitar a interação com a base de conhecimento RAG. Com ele, você pode:
+## Base de Dados Vetorial
+Este projeto utiliza **ChromaDB** para armazenamento e busca vetorial. A configuração varia conforme o ambiente:
 
-- Fazer perguntas diretamente à base de conhecimento.
-- Visualizar os documentos mais relevantes retornados pelo sistema.
-- Explorar os dados vetorizados de forma intuitiva.
+- **Ambiente de Desenvolvimento**:
+  - Nos notebooks, o ChromaDB está configurado para usar **DuckDB** como backend, armazenando os dados localmente no diretório `vectorstore`.
+  - Ideal para testes e desenvolvimento local.
 
-### Como Executar o Front-End
-1. Certifique-se de que todas as dependências estão instaladas:
-   ```bash
-   pip install -r requirements.txt
-   ```
+- **Ambiente de Produção**:
+  - Em produção, o ChromaDB está configurado para usar **PostgreSQL** como backend, garantindo maior escalabilidade e confiabilidade.
+  - A configuração do PostgreSQL é gerenciada por variáveis de ambiente e está integrada ao pipeline automatizado.
 
-2. Execute o aplicativo Streamlit:
-   ```bash
-   streamlit run scripts/qa_system.py
-   ```
+### Configuração do PostgreSQL
+Certifique-se de que o banco de dados PostgreSQL está configurado corretamente antes de executar o projeto em produção. As variáveis de ambiente necessárias incluem:
 
-3. Acesse o front-end no navegador pelo endereço:
-   [http://localhost:8501](http://localhost:8501)
+- `POSTGRES_HOST`: Endereço do servidor PostgreSQL.
+- `POSTGRES_PORT`: Porta do servidor PostgreSQL.
+- `POSTGRES_USER`: Usuário do banco de dados.
+- `POSTGRES_PASSWORD`: Senha do banco de dados.
+- `POSTGRES_DB`: Nome do banco de dados.
 
 ---
 
 ## Próximos Passos
 - **Automatização do Pipeline**:
-  - Criar scripts para execução automatizada do pipeline ETL.
+  - Expandir os pipelines no GitHub Actions para incluir deploy contínuo.
 
 - **Validação e Testes**:
   - Adicionar testes unitários para garantir a qualidade dos dados e do código.
