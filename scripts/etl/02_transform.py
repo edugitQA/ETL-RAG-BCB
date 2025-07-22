@@ -2,6 +2,7 @@ import pandas as pd
 import locale
 import json
 from pathlib import Path
+import locale
 
 def run_transformation():
     """
