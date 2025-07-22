@@ -27,7 +27,7 @@ def init_qa_system():
         collection_name=COLLECTION_NAME,
     )
 
-    llm = ChatOpenAI(model_name="gpt-4o", temperature=0.0, openai_api_key=api_key)
+    llm = ChatOpenAI(model_name="gpt-4o", temperature=0.3, openai_api_key=api_key)
     
     # O prompt continua o mesmo...
     prompt_template = """
