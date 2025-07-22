@@ -40,7 +40,7 @@ def run_extraction():
         print("--- Etapa 1 Concluída ---\n")
         
     except requests.exceptions.RequestException as e:
-        print(f"❌ Erro ao acessar a API: {e}")
+        print(f"Erro ao acessar a API: {e}")
         raise
 
 if __name__ == "__main__":
