@@ -38,6 +38,7 @@ def run_transformation():
     df['valor'] = df['valor'].astype(int)
 
     def gerar_contexto(row):
+        locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
         data_formatada = row['data'].strftime("%B de %Y")
         valor_formatado = f"R$ {row['valor'] / 100:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
         return f"Em {data_formatada}, o valor registrado na série foi de {valor_formatado}."
